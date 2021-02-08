@@ -1,0 +1,124 @@
+﻿@page
+@model ContactListModel
+@{
+  ViewData["Title"] = "Contacts";
+}
+<h3>@ViewData["Title"]</h3>
+
+<script type="text/javascript">
+  function getUserId() {
+    return document.getElementById('UserId').value;
+  }
+  function onInitNewRow(g) {
+    g.data.UserId = getUserId();
+  }
+  function getCount() {
+    var contacts = [];
+
+    $("#gridContainer").dxDataGrid("instance")
+      .option("dataSource")
+      .store
+      .load()
+      .done(function (data) {
+        contacts = data;
+      });
+
+    return DevExpress.data.query(contacts)
+      .toArray().length;
+  }
+  function configureGridToolbar(e) {
+    var dataGrid = e.component;
+    e.toolbarOptions.items.unshift({
+      location: "after",
+      widget: "dxButton",
+      options: {
+        icon: "refresh",
+        onClick: function () {
+          dataGrid.refresh();
+        }
+      }
+    });
+  }
+
+</script>
+
+@Html.Hidden("UserId", Model.UserId)
+
+@(Html.DevExtreme().DataGrid<Contacts.Api.Models.Contact>()
+    .ID("gridContainer")
+    .DataSource(d => d.WebApi()
+        .Controller("Contacts")
+        .Key("Id")
+        .LoadAction("LoadContactsModel")
+        .LoadParams(new { userId = new JS("getUserId()") })
+    .InsertAction("InsertContact")
+    .UpdateAction("UpdateContact")
+    .DeleteAction("DeleteContact")
+    )
+    .RemoteOperations(true)
+    .OnInitNewRow("onInitNewRow")
+    .Editing(editing =>
+    {
+      editing.Mode(GridEditMode.Popup)
+        .Popup(p => p
+              .Title("Contact Info")
+              .ShowTitle(true)
+              .Width(850)
+              .Height(350)
+              .Position(pos => pos
+                  .My(HorizontalAlignment.Center, VerticalAlignment.Center)
+                  .At(HorizontalAlignment.Center, VerticalAlignment.Center)
+                  .Of(new JS("window"))
+              )
+      );
+      editing.AllowAdding(true);
+      editing.AllowDeleting(true);
+      editing.AllowUpdating(true);
+    })
+    .Columns(columns => {
+      columns.AddFor(m => m.Name).AllowSorting(true).SortOrder(SortOrder.Asc);
+      columns.AddFor(m => m.Address).AllowSorting(true);
+      columns.AddFor(m => m.Email).AllowSorting(true);
+    })
+    .FilterRow(filterRow => filterRow
+        .Visible(true)
+        .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+    .SearchPanel(searchPanel => searchPanel
+        .Visible(true)
+        .Width(240)
+        .Placeholder("Search...")
+    )
+    .Selection(s => s.Mode(SelectionMode.Single))
+    .HoverStateEnabled(true)
+    .ShowColumnLines(false)
+    .ShowRowLines(true)
+    .OnToolbarPreparing("configureGridToolbar")
+    .RowAlternationEnabled(true)
+    .ColumnHidingEnabled(true)
+    .ColumnChooser(c => c
+        .Enabled(true)
+        .Mode(GridColumnChooserMode.Select)
+    )
+    .FilterRow(f => f.Visible(true))
+    .HeaderFilter(f => f.Visible(false))
+    .GroupPanel(p => p.Visible(false))
+    .Sorting(sorting => sorting.Mode(GridSortingMode.Single))
+    .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+    .Height(600)
+    .ShowBorders(true)
+    .Paging(paging => paging.PageSize(10))
+    .Pager(pager =>
+    {
+      pager.ShowPageSizeSelector(true);
+      pager.ShowNavigationButtons(true);
+      //pager.AllowedPageSizes(new[] { 5, 10, 20 });
+      pager.ShowInfo(true);
+      pager.Visible(true);
+    })
+    .Summary(s => s
+        .TotalItems(totalItems => {
+          totalItems.AddFor(m => m.Name).SummaryType(SummaryType.Count);
+        })
+    )
+)
