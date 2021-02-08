@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevExtreme NuGet.config", "
 		Contacts\README.md = Contacts\README.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contacts.Tests", "Contacts.Tests\Contacts.Tests.csproj", "{90FA2C68-13F4-48AF-9DD4-8ED5AF2E3DC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{EB3DE60D-4AA2-4286-BB00-F3454F25CBDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB3DE60D-4AA2-4286-BB00-F3454F25CBDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB3DE60D-4AA2-4286-BB00-F3454F25CBDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90FA2C68-13F4-48AF-9DD4-8ED5AF2E3DC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90FA2C68-13F4-48AF-9DD4-8ED5AF2E3DC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90FA2C68-13F4-48AF-9DD4-8ED5AF2E3DC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90FA2C68-13F4-48AF-9DD4-8ED5AF2E3DC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
