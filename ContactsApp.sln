@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevExtreme NuGet.config", "DevExtreme NuGet.config", "{F35795CD-4416-46A8-B6C7-EBD63952540A}"
 	ProjectSection(SolutionItems) = preProject
 		NuGet.config = NuGet.config
+		Contacts\README.md = Contacts\README.md
 	EndProjectSection
 EndProject
 Global
